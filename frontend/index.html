@@ -1,6 +1,34 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script>
+      (() => {
+        const key = "careerscope-theme";
+        let preference = "system";
+
+        try {
+          const stored = localStorage.getItem(key);
+
+          if (["light", "dark", "system"].includes(stored)) {
+            preference = stored;
+          }
+        } catch {
+          // Storage may be unavailable.
+        }
+
+        const prefersDark =
+          window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false;
+
+        const resolved =
+          preference === "system"
+            ? prefersDark
+              ? "dark"
+              : "light"
+            : preference;
+
+        document.documentElement.dataset.theme = resolved;
+      })();
+    </script>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
