@@ -148,4 +148,27 @@ describe('ThemeToggle', () => {
         .toHaveAttribute('data-theme', 'dark');
     });
   });
+  
+  it('cycles themes using the mobile button', () => {
+    renderToggle();
+
+    const button = screen.getByRole('button', {
+      name: /appearance: system/i,
+    });
+
+    fireEvent.click(button);
+
+    expect(localStorage.getItem('careerscope-theme'))
+      .toBe('light');
+
+    fireEvent.click(button);
+
+    expect(localStorage.getItem('careerscope-theme'))
+      .toBe('dark');
+
+    fireEvent.click(button);
+
+    expect(localStorage.getItem('careerscope-theme'))
+      .toBe('system');
+  });
 });
