@@ -1,0 +1,20 @@
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  --color-background: #f5f7fb;
+  --color-surface: #ffffff;
+  --color-surface-muted: #edf1f8;
+  --color-text: #142039;
+  --color-text-muted: #53627b;
+  --color-border: #dce3ef;
+
+  --color-accent: #4257d6;
+  --color-accent-contrast: #ffffff;
+  --color-focus: #4257d6;
+
+  --color-success: #16745e;
+  --color-danger: #b42335;
+
+  --shadow-card: 0 8px 28px rgb(20 32 57 / 6%);
+}
