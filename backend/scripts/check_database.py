@@ -1,7 +1,6 @@
-from sqlalchemy import func, select
-
 from app.database import SessionLocal
 from app.models import Occupation, WageEstimate
+from sqlalchemy import func, select
 
 with SessionLocal() as session:
     occupation_count = session.scalar(select(func.count()).select_from(Occupation))

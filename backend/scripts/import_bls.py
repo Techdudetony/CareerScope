@@ -1,8 +1,7 @@
 from pathlib import Path
 
 from app.database import Base, SessionLocal, engine
-from app import models
-from app.etl import parse_bls_file, load_bls_data
+from app.etl import load_bls_data, parse_bls_file
 
 BASE_DIR = Path(__file__).resolve().parents[1]
 

@@ -1,11 +1,10 @@
 from pathlib import Path
 
+import pandas as pd
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from .models import Occupation, WageEstimate
-
-import pandas as pd
 
 REQUIRED_COLUMNS = [
     "AREA",
