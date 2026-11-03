@@ -1,5 +1,9 @@
 from pathlib import Path
-from token import NUMBER
+
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+
+from .models import Occupation, WageEstimate
 
 import pandas as pd
 
@@ -81,3 +85,68 @@ def parse_bls_file(path: str | Path) -> pd.DataFrame:
             "annual_p90",
         ]
     ].reset_index(drop=True)
+
+
+def load_bls_data(
+    session: Session,
+    df: pd.DataFrame,
+    year: int = 2025,
+) -> int:
+    """Insert or update BLS occupation and wage data."""
+
+    count = 0
+
+    for row in df.to_dict(orient="records"):
+        occupation = session.scalar(
+            select(Occupation).where(Occupation.code == row["code"])
+        )
+
+        if occupation is None:
+            occupation = Occupation(
+                code=row["code"],
+                title=row["title"],
+                group=row["group"],
+            )
+            session.add(occupation)
+            session.flush()
+        else:
+            occupation.title = row["title"]
+            occupation.group = row["group"]
+
+        wage = session.scalar(
+            select(WageEstimate).where(
+                WageEstimate.occupation_id == occupation.id,
+                WageEstimate.year == year,
+                WageEstimate.area_code == "99",
+            )
+        )
+
+        if wage is None:
+            wage = WageEstimate(
+                occupation_id=occupation.id,
+                year=year,
+                area_code="99",
+                area_name="U.S.",
+            )
+            session.add(wage)
+
+        for field in [
+            "employment",
+            "annual_mean",
+            "annual_median",
+            "annual_p10",
+            "annual_p90",
+        ]:
+            value = row[field]
+
+            setattr(
+                wage,
+                field,
+                None if pd.isna(value) else value,
+            )
+
+        count += 1
+
+    session.commit()
+
+    return count
