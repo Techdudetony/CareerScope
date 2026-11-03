@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
@@ -7,25 +8,35 @@ import SalaryChart from '../components/SalaryChart';
 
 export default function OccupationDetails() {
   const { code } = useParams();
-  const [occupation, setOccupation] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+
+  const [request, setRequest] = useState({
+    code: null,
+    occupation: null,
+    error: '',
+  });
 
   useEffect(() => {
     let active = true;
 
     async function loadOccupation() {
-      setLoading(true);
-      setOccupation(null);
-      setError('');
-
       try {
         const data = await getOccupation(code);
-        if (active) setOccupation(data);
+
+        if (!active) return;
+
+        setRequest({
+          code,
+          occupation: data ?? null,
+          error: data ? '' : 'Occupation not found.',
+        });
       } catch {
-        if (active) setError('Occupation not found or API unavailable.');
-      } finally {
-        if (active) setLoading(false);
+        if (!active) return;
+
+        setRequest({
+          code,
+          occupation: null,
+          error: 'Occupation not found or API unavailable.',
+        });
       }
     }
 
@@ -36,23 +47,28 @@ export default function OccupationDetails() {
     };
   }, [code]);
 
-  if (loading) {
+  // Do not render data belonging to a previous route.
+  if (request.code !== code) {
     return (
       <main className="container page-content" role="status">
-        Loading...
+        Loading occupation...
       </main>
     );
   }
 
-  if (error) {
+  if (request.error || !request.occupation) {
     return (
       <main className="container page-content" role="alert">
-        {error}
+        {request.error || 'Occupation not found.'}
       </main>
     );
   }
 
-  const wage = occupation.wages?.find((item) => item.year === 2025 && item.area_code === '99');
+  const occupation = request.occupation;
+
+  const wage = occupation.wages?.find(
+    (item) => item.year === 2025 && item.area_code === '99'
+  );
 
   const metrics = [
     ['Median salary', wage?.annual_median],
@@ -87,7 +103,9 @@ export default function OccupationDetails() {
 
       <section className="section-block">
         <h2>Employment information</h2>
-        <p>Estimated employment: {formatNumber(wage?.employment)}</p>
+        <p>
+          Estimated employment: {formatNumber(wage?.employment)}
+        </p>
         <p>Source: {wage?.source ?? 'BLS OEWS'}</p>
       </section>
     </main>

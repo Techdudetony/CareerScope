@@ -1,16 +1,103 @@
-# React + Vite
+# CareerScope Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+CareerScope is a career and wage analytics application built with
+React, Vite, FastAPI, and official BLS OEWS data.
 
-Currently, two official plugins are available:
+## Technology
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React
+- Vite
+- React Router
+- Axios
+- Recharts
+- Lucide React
+- Vitest
+- React Testing Library
 
-## React Compiler
+## Prerequisites
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Node.js compatible with Vite 8
+- npm
+- Python 3.11
+- CareerScope FastAPI backend
+- Imported BLS OEWS dataset
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+From the frontend directory:
+
+```bash
+npm ci
+cp .env.example .env.local
+```
+
+## Environment configuration
+
+The frontend uses:
+
+```dotenv
+VITE_API_BASE_URL=http://127.0.0.1:8000
+```
+
+The `.env.example` file is committed to Git.
+
+The `.env.local` file is machine-specific and ignored by Git.
+
+Never store secrets in variables prefixed with `VITE_`.
+
+## Running the backend
+
+From the backend directory with the Python virtual environment active:
+
+```bash
+python -m uvicorn app.main:app --reload
+```
+
+Verify:
+
+http://127.0.0.1:8000/health
+
+The occupation endpoints also require an initialized database
+containing the imported BLS data.
+
+## Running the frontend
+
+From the frontend directory:
+
+```bash
+npm run dev
+```
+
+Open the local address printed by Vite.
+
+## Application pages
+
+- `/` : Dashboard and top-paying occupations
+- `/occupations` : Searchable occupation directory
+- `/occupations/:code` : Occupation details and wage estimates
+
+## Testing
+
+```bash
+npm run test
+npm run lint
+npm run build
+npm audit --omit=dev
+```
+
+## Troubleshooting
+
+If the frontend cannot load occupation data:
+
+1. Verify the FastAPI server is running.
+2. Verify the `/health` endpoint returns status `ok`.
+3. Verify `/api/v1/occupations` returns records.
+4. Check that the SQLite database has been initialized.
+5. Verify `VITE_API_BASE_URL` in `.env.local`.
+6. Restart Vite after changing environment variables.
+
+## Data source
+
+U.S. Bureau of Labor Statistics
+Occupational Employment and Wage Statistics (OEWS)
+May 2025 national estimates.

@@ -20,7 +20,7 @@ export default function SalaryChart({ wage }) {
 
   return (
     <section className="salary-chart-section">
-      <h2>Salary distribution</h2>
+      <h2>Annual wage estimates</h2>
       <p>Annual wage estimates from BLS OEWS</p>
 
       <div className="salary-chart">
