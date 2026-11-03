@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getOccupation } from '../api/occupations';
 import { formatCurrency, formatNumber } from '../utils/formatters';
+import SalaryChart from '../components/SalaryChart';
 
 export default function OccupationDetails() {
   const { code } = useParams();
@@ -79,6 +80,8 @@ export default function OccupationDetails() {
           </div>
         ))}
       </div>
+
+      <SalaryChart wage={wage} />
 
       <section className="section-block">
         <h2>Employment information</h2>

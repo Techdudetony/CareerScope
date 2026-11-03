@@ -287,3 +287,52 @@ h1 {
     gap: 5px;
   }
 }
+
+.salary-chart-section {
+  margin-top: 36px;
+  padding: 28px;
+  background: #fff;
+  border: 1px solid #e5eaf2;
+  border-radius: 14px;
+}
+
+.salary-chart-section h2 {
+  margin-top: 0;
+}
+
+.salary-chart-section p {
+  color: #64748b;
+}
+
+.salary-chart {
+  width: 100%;
+  min-width: 0;
+  margin-top: 24px;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.pagination button {
+  padding: 10px 18px;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  background: white;
+  color: #244eaa;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: #edf3ff;
+}
+
+.pagination button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

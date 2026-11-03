@@ -2,17 +2,21 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getOccupations } from '../api/occupations';
 
+const PAGE_SIZE = 25;
+
 export default function Occupations() {
   const [search, setSearch] = useState('');
   const [query, setQuery] = useState('');
+  const [page, setPage] = useState(1);
+
   const [request, setRequest] = useState({
     query: '',
+    page: 1,
     results: [],
     loading: true,
     error: '',
   });
 
-  // Debounce user input by 300ms.
   useEffect(() => {
     const timer = setTimeout(() => {
       setQuery(search);
@@ -21,7 +25,6 @@ export default function Occupations() {
     return () => clearTimeout(timer);
   }, [search]);
 
-  // Fetch occupations whenever the debounced query changes.
   useEffect(() => {
     let active = true;
 
@@ -29,13 +32,15 @@ export default function Occupations() {
       try {
         const data = await getOccupations({
           search: query,
-          limit: 50,
+          limit: PAGE_SIZE,
+          offset: (page - 1) * PAGE_SIZE,
         });
 
         if (!active) return;
 
         setRequest({
           query,
+          page,
           results: data,
           loading: false,
           error: '',
@@ -45,6 +50,7 @@ export default function Occupations() {
 
         setRequest({
           query,
+          page,
           results: [],
           loading: false,
           error: 'Could not load occupations.',
@@ -57,12 +63,19 @@ export default function Occupations() {
     return () => {
       active = false;
     };
-  }, [query]);
+  }, [query, page]);
 
-  // A search is pending until its matching response arrives.
-  const loading = request.loading || search !== query || request.query !== query;
+  const loading =
+    request.loading || search !== query || request.query !== query || request.page !== page;
 
   const { results, error } = request;
+
+  const hasNextPage = results.length === PAGE_SIZE;
+
+  function handleSearchChange(event) {
+    setSearch(event.target.value);
+    setPage(1);
+  }
 
   return (
     <main className="container page-content">
@@ -81,7 +94,7 @@ export default function Occupations() {
         className="search-input"
         type="search"
         value={search}
-        onChange={(event) => setSearch(event.target.value)}
+        onChange={handleSearchChange}
         placeholder="Try software, nurse, analyst..."
       />
 
@@ -95,7 +108,9 @@ export default function Occupations() {
 
       {!loading && !error && (
         <>
-          <p className="result-count">Showing {results.length} occupations</p>
+          <p className="result-count">
+            Page {page}, showing {results.length} occupations
+          </p>
 
           <div className="occupation-list">
             {results.map((occupation) => (
@@ -110,7 +125,27 @@ export default function Occupations() {
             ))}
           </div>
 
-          {results.length === 0 && <p>No occupations match your search.</p>}
+          {results.length === 0 && <p>No occupations found on this page.</p>}
+
+          <nav className="pagination" aria-label="Occupation pages">
+            <button
+              type="button"
+              disabled={page === 1}
+              onClick={() => setPage((current) => current - 1)}
+            >
+              Previous
+            </button>
+
+            <span>Page {page}</span>
+
+            <button
+              type="button"
+              disabled={!hasNextPage}
+              onClick={() => setPage((current) => current + 1)}
+            >
+              Next
+            </button>
+          </nav>
         </>
       )}
     </main>
