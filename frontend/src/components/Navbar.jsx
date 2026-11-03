@@ -1,6 +1,6 @@
 
 import { useEffect, useRef, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import {
   BriefcaseBusiness,
   ChartColumn,
@@ -19,8 +19,7 @@ const navigation = [
 export default function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButtonRef = useRef(null);
-  const mobileNavRef = useRef(null);
-  // const location = useLocation();
+  const location = useLocation();
 
   useEffect(() => {
     if (!menuOpen) return undefined;
@@ -95,7 +94,7 @@ export default function NavBar() {
         </div>
 
         <nav
-          ref={mobileNavRef}
+          key={location.pathname}
           id="mobile-navigation"
           className={`mobile-navigation${menuOpen ? ' mobile-navigation--open' : ''}`}
           aria-label="Mobile navigation"
