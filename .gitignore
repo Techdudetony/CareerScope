@@ -1,0 +1,44 @@
+# Python virtual environment
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+#.py[cod]
+.pytest_cache/
+.ruff_cache/
+
+# Environment variables
+.env
+.env.*
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Local data files
+data/raw/*
+data/processed/*
+
+# Keep directory placeholders
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# IDE and operating system
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# BLS source and processed datasets
+backend/data/raw/*
+backend/data/processed/*
+
+# Preserve folder placeholders
+!backend/data/raw/.gitkeep
+!backend/data/processed/.gitkeep
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
