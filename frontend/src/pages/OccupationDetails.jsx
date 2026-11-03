@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { ArrowLeft } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { getOccupation } from '../api/occupations';
 import { formatCurrency, formatNumber } from '../utils/formatters';
@@ -62,8 +63,9 @@ export default function OccupationDetails() {
 
   return (
     <main className="container page-content">
-      <Link to="/occupations" className="text-link">
-        Back to occupations
+      <Link to="/occupations" className="back-button">
+        <ArrowLeft size={18} aria-hidden="true" />
+        <span>Back to occupations</span>
       </Link>
 
       <div className="page-heading">
