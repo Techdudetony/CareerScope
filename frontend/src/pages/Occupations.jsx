@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getOccupations } from '../api/occupations';
@@ -13,26 +14,31 @@ export default function Occupations() {
     query: '',
     page: 1,
     results: [],
+    hasNextPage: false,
     loading: true,
     error: '',
   });
 
+  // Debounce search input to avoid unnecessary API calls.
   useEffect(() => {
     const timer = setTimeout(() => {
-      setQuery(search);
+      setQuery(search.trim());
     }, 300);
 
     return () => clearTimeout(timer);
   }, [search]);
 
+  // Fetch occupations whenever the search or page changes.
   useEffect(() => {
     let active = true;
 
     async function loadOccupations() {
       try {
+        // Fetch one additional record to determine
+        // whether another page actually exists.
         const data = await getOccupations({
           search: query,
-          limit: PAGE_SIZE,
+          limit: PAGE_SIZE + 1,
           offset: (page - 1) * PAGE_SIZE,
         });
 
@@ -41,7 +47,8 @@ export default function Occupations() {
         setRequest({
           query,
           page,
-          results: data,
+          results: data.slice(0, PAGE_SIZE),
+          hasNextPage: data.length > PAGE_SIZE,
           loading: false,
           error: '',
         });
@@ -52,8 +59,9 @@ export default function Occupations() {
           query,
           page,
           results: [],
+          hasNextPage: false,
           loading: false,
-          error: 'Could not load occupations.',
+          error: 'Could not load occupations. Please try again.',
         });
       }
     }
@@ -66,11 +74,12 @@ export default function Occupations() {
   }, [query, page]);
 
   const loading =
-    request.loading || search !== query || request.query !== query || request.page !== page;
+    request.loading ||
+    search.trim() !== query ||
+    request.query !== query ||
+    request.page !== page;
 
-  const { results, error } = request;
-
-  const hasNextPage = results.length === PAGE_SIZE;
+  const { results, error, hasNextPage } = request;
 
   function handleSearchChange(event) {
     setSearch(event.target.value);
@@ -98,7 +107,9 @@ export default function Occupations() {
         placeholder="Try software, nurse, analyst..."
       />
 
-      {loading && <p role="status">Searching occupations...</p>}
+      {loading && (
+        <p role="status">Searching occupations...</p>
+      )}
 
       {!loading && error && (
         <p role="alert" className="error-message">
@@ -116,7 +127,9 @@ export default function Occupations() {
             {results.map((occupation) => (
               <Link
                 key={occupation.code}
-                to={`/occupations/${encodeURIComponent(occupation.code)}`}
+                to={`/occupations/${encodeURIComponent(
+                  occupation.code
+                )}`}
                 className="occupation-list-item"
               >
                 <span>{occupation.title}</span>
@@ -125,27 +138,38 @@ export default function Occupations() {
             ))}
           </div>
 
-          {results.length === 0 && <p>No occupations found on this page.</p>}
+          {results.length === 0 && (
+            <p>No occupations found on this page.</p>
+          )}
 
-          <nav className="pagination" aria-label="Occupation pages">
-            <button
-              type="button"
-              disabled={page === 1}
-              onClick={() => setPage((current) => current - 1)}
+          {results.length > 0 && (
+            <nav
+              className="pagination"
+              aria-label="Occupation pages"
             >
-              Previous
-            </button>
+              <button
+                type="button"
+                disabled={page === 1}
+                onClick={() =>
+                  setPage((current) => current - 1)
+                }
+              >
+                Previous
+              </button>
 
-            <span>Page {page}</span>
+              <span>Page {page}</span>
 
-            <button
-              type="button"
-              disabled={!hasNextPage}
-              onClick={() => setPage((current) => current + 1)}
-            >
-              Next
-            </button>
-          </nav>
+              <button
+                type="button"
+                disabled={!hasNextPage}
+                onClick={() =>
+                  setPage((current) => current + 1)
+                }
+              >
+                Next
+              </button>
+            </nav>
+          )}
         </>
       )}
     </main>
