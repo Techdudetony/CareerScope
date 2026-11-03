@@ -135,4 +135,17 @@ describe('ThemeToggle', () => {
         .toHaveAttribute('data-theme', 'dark');
     });
   });
+  
+  it('initializes in dark mode when the system prefers dark', async () => {
+    darkMode = true;
+
+    renderToggle();
+
+    expect(screen.getByRole('combobox')).toHaveValue('system');
+
+    await waitFor(() => {
+      expect(document.documentElement)
+        .toHaveAttribute('data-theme', 'dark');
+    });
+  });
 });

@@ -19,7 +19,7 @@ function getSystemTheme() {
         return 'light';
     }
 
-    return window.matchMedia('(preferes-color-scheme: dark)')
+    return window.matchMedia('(prefers-color-scheme: dark)')
         .matches ? 'dark' : 'light';
 }
 
