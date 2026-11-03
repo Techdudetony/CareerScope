@@ -5,7 +5,8 @@ import {
   render,
   screen,
 } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { act } from 'react';
 
 import ThemeProvider from '../context/ThemeProvider';
 import NavBar from '../components/Navbar';
@@ -27,6 +28,38 @@ describe('Navbar', () => {
     expect(
       screen.getByRole('link', { name: /careerscope home/i })
     ).toHaveAttribute('href', '/');
+  });
+
+  it('closes the mobile menu when the route changes', async () => {
+    const router = createMemoryRouter(
+      [
+        { path: '/', element: <NavBar /> },
+        { path: '/occupations', element: <NavBar /> },
+      ],
+      { initialEntries: ['/'] }
+    );
+
+    render(
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    );
+
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Open menu' })
+    );
+
+    expect(
+      screen.getByRole('button', { name: 'Close menu' })
+    ).toHaveAttribute('aria-expanded', 'true');
+
+    await act(async () => {
+      await router.navigate('/occupations');
+    });
+
+    expect(
+      screen.getByRole('button', { name: 'Open menu' })
+    ).toHaveAttribute('aria-expanded', 'false');
   });
 
   it('renders desktop navigation links', () => {

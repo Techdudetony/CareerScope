@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
@@ -17,9 +16,14 @@ const navigation = [
 ];
 
 export default function NavBar() {
+  const location = useLocation();
+
+  return <NavBarContent key={location.pathname} />;
+}
+
+function NavBarContent() {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButtonRef = useRef(null);
-  const location = useLocation();
 
   useEffect(() => {
     if (!menuOpen) return undefined;
@@ -94,7 +98,6 @@ export default function NavBar() {
         </div>
 
         <nav
-          key={location.pathname}
           id="mobile-navigation"
           className={`mobile-navigation${menuOpen ? ' mobile-navigation--open' : ''}`}
           aria-label="Mobile navigation"

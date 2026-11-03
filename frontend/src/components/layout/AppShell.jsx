@@ -11,7 +11,11 @@ export default function AppShell() {
 
             <NavBar />
 
-            <div id='main-content' className='app-shell__content'>
+            <div
+                id="main-content"
+                className="app-shell__content"
+                tabIndex={-1}
+            >
                 <Outlet />
             </div>
         </div>

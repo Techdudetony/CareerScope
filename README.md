@@ -338,7 +338,7 @@ Pull requests should include a summary, type of change, implementation details, 
 - [x] BLS data ingestion and validation
 - [x] React frontend and occupation browsing
 - [x] Intelligence Hybrid design-system foundation
-- [ ] App shell and responsive navigation
+- [x] App shell and responsive navigation
 - [ ] Redesigned landing page
 - [ ] Enhanced occupation explorer
 - [ ] Improved wage analytics
