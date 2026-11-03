@@ -1,6 +1,6 @@
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import { render, screen, waitFor, fireEvent, act } from '@testing-library/react';
 import { MemoryRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import OccupationDetails from '../pages/OccupationDetails';
 import { getOccupation } from '../api/occupations';
@@ -131,10 +131,12 @@ it('does not show stale data after navigation', async () => {
   ).toHaveTextContent('Loading occupation');
 
   // Resolve the second API request.
-  resolveSecondRequest({
-    code: '15-1211',
-    title: 'Computer Systems Analysts',
-    wages: [],
+  await act(async () => {
+    resolveSecondRequest({
+      code: '15-1211',
+      title: 'Computer Systems Analysts',
+      wages: [],
+    });
   });
 
   // Verify that the new occupation appears.
