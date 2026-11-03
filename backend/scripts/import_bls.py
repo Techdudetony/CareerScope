@@ -20,7 +20,7 @@ def main():
 
     Base.metadata.create_all(bind=engine)
 
-    with SessionLocal() as session:
+    with SessionLocal.begin() as session:
         count = load_bls_data(session, df)
 
     print(f"Successfully imported {count} records")

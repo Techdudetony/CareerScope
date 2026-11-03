@@ -11,6 +11,9 @@ REQUIRED_COLUMNS = [
     "OCC_CODE",
     "OCC_TITLE",
     "O_GROUP",
+    "I_GROUP",
+    "OWN_CODE",
+    "NAICS",
     "TOT_EMP",
     "A_MEAN",
     "A_MEDIAN",
@@ -33,7 +36,12 @@ def parse_bls_file(path: str | Path) -> pd.DataFrame:
     df = pd.read_excel(
         path,
         sheet_name="national_M2025_dl",
-        dtype={"OCC_CODE": str, "AREA": str},
+        dtype={
+            "OCC_CODE": str,
+            "AREA": str,
+            "NAICS": str,
+            "OWN_CODE": str,
+        },
     )
 
     df.columns = df.columns.str.strip().str.upper()
@@ -42,8 +50,14 @@ def parse_bls_file(path: str | Path) -> pd.DataFrame:
     if missing:
         raise ValueError(f"Missing required columns: {sorted(missing)}")
 
-    # National, detailed occuupations only.
-    df = df[(df["AREA"] == "99") & (df["O_GROUP"] == "detailed")].copy()
+    # National, detailed occupations only.
+    df = df[
+        (df["AREA"] == "99")
+        & (df["NAICS"] == "000000")
+        & (df["I_GROUP"] == "cross-industry")
+        & (df["OWN_CODE"] == "1235")
+        & (df["O_GROUP"] == "detailed")
+    ].copy()
 
     # Preserve occupational classification codes.
     df["OCC_CODE"] = df["OCC_CODE"].str.strip()
@@ -69,8 +83,6 @@ def parse_bls_file(path: str | Path) -> pd.DataFrame:
             "A_PCT90": "annual_p90",
         }
     )
-
-    print("Columns after rename:", df.columns.tolist())
 
     return df[
         [
@@ -145,7 +157,5 @@ def load_bls_data(
             )
 
         count += 1
-
-    session.commit()
 
     return count
