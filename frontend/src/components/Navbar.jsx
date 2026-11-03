@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { BriefcaseBusiness, ChartColumn, Search } from 'lucide-react';
+import ThemeToggle from './ui/ThemeToggle';
 
 export default function NavBar() {
   return (
@@ -21,6 +22,8 @@ export default function NavBar() {
             Occupations
           </NavLink>
         </nav>
+
+        <ThemeToggle />
       </div>
     </header>
   );
