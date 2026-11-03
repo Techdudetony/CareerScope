@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import ThemeProvider from '../context/ThemeProvider';
 import ThemeToggle from '../components/ui/ThemeToggle';
+import { act } from 'react';
 
 let darkMode = false;
 let listeners = new Set();
@@ -23,10 +24,12 @@ function mockMatchMedia() {
 }
 
 function changeSystemTheme(isDark) {
-  darkMode = isDark;
+  act(() => {
+    darkMode = isDark;
 
-  listeners.forEach((callback) => {
-    callback({ matches: isDark });
+    listeners.forEach((callback) => {
+      callback({ matches: isDark });
+    });
   });
 }
 
