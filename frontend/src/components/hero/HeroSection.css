@@ -23,7 +23,12 @@
   border-radius: 24px;
 
   background:
-    radial-gradient(circle at 80% 30%, rgba(104, 132, 255, 0.15), transparent 45%), #ffffff;
+    radial-gradient(circle at 78% 28%, rgba(95, 127, 255, 0.18), transparent 48%),
+    linear-gradient(135deg, #ffffff 0%, #f2f5ff 55%, #e8eeff 100%);
+
+  border: 1px solid rgba(82, 111, 232, 0.12);
+
+  box-shadow: 0 16px 48px rgba(35, 60, 120, 0.06);
 
   color: var(--hero-foreground);
 }
@@ -38,6 +43,9 @@
 
   background:
     radial-gradient(circle at 80% 30%, rgba(76, 110, 245, 0.16), transparent 45%), #151e32;
+
+  border-color: rgba(143, 168, 255, 0.08);
+  box-shadow: none;
 }
 
 /* Content layout */
