@@ -1,4 +1,3 @@
-
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor, fireEvent, act } from '@testing-library/react';
 import { MemoryRouter, Routes, Route, useNavigate } from 'react-router-dom';
@@ -16,28 +15,24 @@ vi.mock('../components/SalaryChart', () => ({
 const occupation = {
   code: '15-1252',
   title: 'Software Developers',
-  wages: [{
-    year: 2025,
-    area_code: '99',
-    annual_median: 135980,
-    annual_mean: 140000,
-    annual_p10: 80000,
-    annual_p90: 200000,
-    employment: 100000,
-    source: 'BLS OEWS',
-  }],
+  wages: [
+    {
+      year: 2025,
+      area_code: '99',
+      annual_median: 135980,
+      annual_mean: 140000,
+      annual_p10: 80000,
+      annual_p90: 200000,
+      employment: 100000,
+      source: 'BLS OEWS',
+    },
+  ],
 };
 
 function NavigationButton() {
   const navigate = useNavigate();
 
-  return (
-    <button
-      onClick={() => navigate('/occupations/15-1211')}
-    >
-      Change occupation
-    </button>
-  );
+  return <button onClick={() => navigate('/occupations/15-1211')}>Change occupation</button>;
 }
 
 function renderDetails() {
@@ -45,10 +40,7 @@ function renderDetails() {
     <MemoryRouter initialEntries={['/occupations/15-1252']}>
       <NavigationButton />
       <Routes>
-        <Route
-          path="/occupations/:code"
-          element={<OccupationDetails />}
-        />
+        <Route path="/occupations/:code" element={<OccupationDetails />} />
       </Routes>
     </MemoryRouter>
   );
@@ -78,9 +70,7 @@ describe('OccupationDetails', () => {
 
     renderDetails();
 
-    expect(
-      await screen.findByRole('alert')
-    ).toHaveTextContent('Occupation not found.');
+    expect(await screen.findByRole('alert')).toHaveTextContent('Occupation not found.');
   });
 
   it('handles API failures', async () => {
@@ -88,70 +78,64 @@ describe('OccupationDetails', () => {
 
     renderDetails();
 
-    expect(
-      await screen.findByRole('alert')
-    ).toHaveTextContent('API unavailable');
+    expect(await screen.findByRole('alert')).toHaveTextContent('API unavailable');
   });
 
-  
-it('does not show stale data after navigation', async () => {
-  let resolveSecondRequest;
+  it('does not show stale data after navigation', async () => {
+    let resolveSecondRequest;
 
-  getOccupation
-    .mockResolvedValueOnce(occupation)
-    .mockImplementationOnce(
-      () => new Promise((resolve) => {
-        resolveSecondRequest = resolve;
+    getOccupation.mockResolvedValueOnce(occupation).mockImplementationOnce(
+      () =>
+        new Promise((resolve) => {
+          resolveSecondRequest = resolve;
+        })
+    );
+
+    renderDetails();
+
+    await screen.findByRole('heading', {
+      name: 'Software Developers',
+    });
+
+    // Use React Testing Library to trigger navigation.
+    fireEvent.click(
+      screen.getByRole('button', {
+        name: 'Change occupation',
       })
     );
 
-  renderDetails();
-
-  await screen.findByRole('heading', {
-    name: 'Software Developers',
-  });
-
-  // Use React Testing Library to trigger navigation.
-  fireEvent.click(
-    screen.getByRole('button', {
-      name: 'Change occupation',
-    })
-  );
-
-  // The previous occupation must disappear.
-  expect(
-    screen.queryByRole('heading', {
-      name: 'Software Developers',
-    })
-  ).not.toBeInTheDocument();
-
-  // The next occupation should be loading.
-  expect(
-    await screen.findByRole('status')
-  ).toHaveTextContent('Loading occupation');
-
-  // Resolve the second API request.
-  await act(async () => {
-    resolveSecondRequest({
-      code: '15-1211',
-      title: 'Computer Systems Analysts',
-      wages: [],
-    });
-  });
-
-  // Verify that the new occupation appears.
-  await waitFor(() => {
+    // The previous occupation must disappear.
     expect(
-      screen.getByRole('heading', {
-        name: 'Computer Systems Analysts',
+      screen.queryByRole('heading', {
+        name: 'Software Developers',
       })
-    ).toBeInTheDocument();
-  });
+    ).not.toBeInTheDocument();
 
-  expect(
-    screen.queryByRole('heading', {
-      name: 'Software Developers',
-    })
-  ).not.toBeInTheDocument();
-});
+    // The next occupation should be loading.
+    expect(await screen.findByRole('status')).toHaveTextContent('Loading occupation');
+
+    // Resolve the second API request.
+    await act(async () => {
+      resolveSecondRequest({
+        code: '15-1211',
+        title: 'Computer Systems Analysts',
+        wages: [],
+      });
+    });
+
+    // Verify that the new occupation appears.
+    await waitFor(() => {
+      expect(
+        screen.getByRole('heading', {
+          name: 'Computer Systems Analysts',
+        })
+      ).toBeInTheDocument();
+    });
+
+    expect(
+      screen.queryByRole('heading', {
+        name: 'Software Developers',
+      })
+    ).not.toBeInTheDocument();
   });
+});

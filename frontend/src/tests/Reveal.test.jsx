@@ -1,4 +1,3 @@
-
 import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
@@ -41,9 +40,7 @@ describe('Reveal', () => {
       className: 'custom-reveal',
     });
 
-    expect(
-      container.querySelector('.custom-reveal')
-    ).toBeInTheDocument();
+    expect(container.querySelector('.custom-reveal')).toBeInTheDocument();
   });
 
   it('falls back safely for unknown variants', () => {

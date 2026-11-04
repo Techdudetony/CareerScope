@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getOccupations } from '../api/occupations';
@@ -74,10 +73,7 @@ export default function Occupations() {
   }, [query, page]);
 
   const loading =
-    request.loading ||
-    search.trim() !== query ||
-    request.query !== query ||
-    request.page !== page;
+    request.loading || search.trim() !== query || request.query !== query || request.page !== page;
 
   const { results, error, hasNextPage } = request;
 
@@ -107,9 +103,7 @@ export default function Occupations() {
         placeholder="Try software, nurse, analyst..."
       />
 
-      {loading && (
-        <p role="status">Searching occupations...</p>
-      )}
+      {loading && <p role="status">Searching occupations...</p>}
 
       {!loading && error && (
         <p role="alert" className="error-message">
@@ -127,9 +121,7 @@ export default function Occupations() {
             {results.map((occupation) => (
               <Link
                 key={occupation.code}
-                to={`/occupations/${encodeURIComponent(
-                  occupation.code
-                )}`}
+                to={`/occupations/${encodeURIComponent(occupation.code)}`}
                 className="occupation-list-item"
               >
                 <span>{occupation.title}</span>
@@ -138,21 +130,14 @@ export default function Occupations() {
             ))}
           </div>
 
-          {results.length === 0 && (
-            <p>No occupations found on this page.</p>
-          )}
+          {results.length === 0 && <p>No occupations found on this page.</p>}
 
           {results.length > 0 && (
-            <nav
-              className="pagination"
-              aria-label="Occupation pages"
-            >
+            <nav className="pagination" aria-label="Occupation pages">
               <button
                 type="button"
                 disabled={page === 1}
-                onClick={() =>
-                  setPage((current) => current - 1)
-                }
+                onClick={() => setPage((current) => current - 1)}
               >
                 Previous
               </button>
@@ -162,9 +147,7 @@ export default function Occupations() {
               <button
                 type="button"
                 disabled={!hasNextPage}
-                onClick={() =>
-                  setPage((current) => current + 1)
-                }
+                onClick={() => setPage((current) => current + 1)}
               >
                 Next
               </button>

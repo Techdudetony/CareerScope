@@ -227,11 +227,7 @@ h1 {
 
 .hero {
   padding: 56px;
-  background: linear-gradient(
-    125deg,
-    var(--color-hero-start),
-    var(--color-hero-end)
-  );
+  background: linear-gradient(125deg, var(--color-hero-start), var(--color-hero-end));
   border-radius: var(--radius-xl);
   color: var(--color-hero-text);
 }

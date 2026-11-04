@@ -1,4 +1,3 @@
-
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -10,9 +9,10 @@ describe('Button', () => {
   it('renders with button semantics', () => {
     render(<Button>Search careers</Button>);
 
-    expect(
-      screen.getByRole('button', { name: 'Search careers' })
-    ).toHaveAttribute('type', 'button');
+    expect(screen.getByRole('button', { name: 'Search careers' })).toHaveAttribute(
+      'type',
+      'button'
+    );
   });
 
   it('handles clicks', () => {
@@ -42,8 +42,7 @@ describe('Button', () => {
   it('applies visual variants', () => {
     render(<Button variant="secondary">Cancel</Button>);
 
-    expect(screen.getByRole('button'))
-      .toHaveClass('ui-button--secondary');
+    expect(screen.getByRole('button')).toHaveClass('ui-button--secondary');
   });
 });
 
@@ -55,8 +54,7 @@ describe('Card', () => {
       </Card>
     );
 
-    expect(screen.getByRole('article'))
-      .toHaveClass('ui-card--elevated');
+    expect(screen.getByRole('article')).toHaveClass('ui-card--elevated');
   });
 });
 
@@ -64,7 +62,6 @@ describe('Badge', () => {
   it('renders meaningful status text', () => {
     render(<Badge variant="success">Connected</Badge>);
 
-    expect(screen.getByText('Connected'))
-      .toHaveClass('ui-badge--success');
+    expect(screen.getByText('Connected')).toHaveClass('ui-badge--success');
   });
 });

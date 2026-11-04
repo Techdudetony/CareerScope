@@ -1,12 +1,8 @@
-
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Dashboard from '../pages/Dashboard';
-import {
-  checkApiHealth,
-  getTopPayingOccupations,
-} from '../api/occupations';
+import { checkApiHealth, getTopPayingOccupations } from '../api/occupations';
 
 vi.mock('../api/occupations', () => ({
   checkApiHealth: vi.fn(),
@@ -28,25 +24,25 @@ describe('Dashboard', () => {
 
   it('displays connected status and occupation data', async () => {
     checkApiHealth.mockResolvedValue({ status: 'ok' });
-    getTopPayingOccupations.mockResolvedValue([{
-      code: '15-1252',
-      title: 'Software Developers',
-      wages: [{
-        year: 2025,
-        area_code: '99',
-        annual_median: 135980,
-      }],
-    }]);
+    getTopPayingOccupations.mockResolvedValue([
+      {
+        code: '15-1252',
+        title: 'Software Developers',
+        wages: [
+          {
+            year: 2025,
+            area_code: '99',
+            annual_median: 135980,
+          },
+        ],
+      },
+    ]);
 
     renderDashboard();
 
-    expect(
-      await screen.findByText('Connected')
-    ).toBeInTheDocument();
+    expect(await screen.findByText('Connected')).toBeInTheDocument();
 
-    expect(
-      screen.getByText('Software Developers')
-    ).toBeInTheDocument();
+    expect(screen.getByText('Software Developers')).toBeInTheDocument();
   });
 
   it('handles backend failures', async () => {
@@ -55,12 +51,8 @@ describe('Dashboard', () => {
 
     renderDashboard();
 
-    expect(
-      await screen.findByText('Unavailable')
-    ).toBeInTheDocument();
+    expect(await screen.findByText('Unavailable')).toBeInTheDocument();
 
-    expect(
-      screen.getByRole('alert')
-    ).toHaveTextContent('Unable to load career data');
+    expect(screen.getByRole('alert')).toHaveTextContent('Unable to load career data');
   });
 });

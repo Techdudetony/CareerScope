@@ -1,5 +1,5 @@
 :root,
-[data-theme="light"] {
+[data-theme='light'] {
   color-scheme: light;
 
   --color-background: #f5f7fb;
@@ -28,7 +28,7 @@
   --shadow-card: 0 8px 28px rgb(20 32 57 / 6%);
 }
 
-[data-theme="dark"] {
+[data-theme='dark'] {
   color-scheme: dark;
 
   --color-background: #0b1020;

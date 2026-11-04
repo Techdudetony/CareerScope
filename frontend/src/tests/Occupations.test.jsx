@@ -1,4 +1,3 @@
-
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
@@ -43,9 +42,7 @@ describe('Occupations', () => {
       offset: 0,
     });
 
-    expect(
-      screen.getByRole('button', { name: 'Next' })
-    ).toBeEnabled();
+    expect(screen.getByRole('button', { name: 'Next' })).toBeEnabled();
 
     expect(screen.queryByText('Occupation 25')).not.toBeInTheDocument();
   });
@@ -57,9 +54,7 @@ describe('Occupations', () => {
 
     await screen.findByText('Occupation 0');
 
-    expect(
-      screen.getByRole('button', { name: 'Next' })
-    ).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
   });
 
   it('loads the next page', async () => {
@@ -71,9 +66,7 @@ describe('Occupations', () => {
 
     await screen.findByText('Occupation 0');
 
-    fireEvent.click(
-      screen.getByRole('button', { name: 'Next' })
-    );
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
 
     await screen.findByText('Occupation 25');
 
@@ -89,9 +82,7 @@ describe('Occupations', () => {
 
     renderPage();
 
-    expect(
-      await screen.findByRole('alert')
-    ).toHaveTextContent('Could not load occupations');
+    expect(await screen.findByRole('alert')).toHaveTextContent('Could not load occupations');
   });
 
   it('searches occupations after a debounce', async () => {
@@ -101,17 +92,17 @@ describe('Occupations', () => {
 
     await screen.findByText('No occupations found on this page.');
 
-    fireEvent.change(
-      screen.getByRole('searchbox'),
-      { target: { value: 'software' } }
-    );
+    fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'software' } });
 
-    await waitFor(() => {
-      expect(getOccupations).toHaveBeenCalledWith({
-        search: 'software',
-        limit: 26,
-        offset: 0,
-      });
-    }, { timeout: 2000 });
+    await waitFor(
+      () => {
+        expect(getOccupations).toHaveBeenCalledWith({
+          search: 'software',
+          limit: 26,
+          offset: 0,
+        });
+      },
+      { timeout: 2000 }
+    );
   });
 });

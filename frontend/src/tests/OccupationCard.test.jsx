@@ -21,7 +21,7 @@ describe('OccupationCard', () => {
     render(
       <MemoryRouter>
         <OccupationCard occupation={occupation} />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
 
     const link = screen.getByRole('link');
@@ -33,7 +33,7 @@ describe('OccupationCard', () => {
     render(
       <MemoryRouter>
         <OccupationCard occupation={{ ...occupation, wages: [] }} />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
 
     expect(screen.getByText('Not available')).toBeInTheDocument();

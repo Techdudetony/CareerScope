@@ -1,10 +1,10 @@
-import "@testing-library/jest-dom/vitest";
+import '@testing-library/jest-dom/vitest';
 
 class MockIntersectionObserver {
   constructor(callback, options = {}) {
     this.callback = callback;
     this.root = options.root ?? null;
-    this.rootMargin = options.rootMargin ?? "0px";
+    this.rootMargin = options.rootMargin ?? '0px';
     this.thresholds = Array.isArray(options.threshold)
       ? options.threshold
       : [options.threshold ?? 0];
@@ -23,7 +23,7 @@ class MockIntersectionObserver {
           time: 0,
         },
       ],
-      this,
+      this
     );
   }
 
