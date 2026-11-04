@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
@@ -66,9 +65,7 @@ export default function OccupationDetails() {
 
   const occupation = request.occupation;
 
-  const wage = occupation.wages?.find(
-    (item) => item.year === 2025 && item.area_code === '99'
-  );
+  const wage = occupation.wages?.find((item) => item.year === 2025 && item.area_code === '99');
 
   const metrics = [
     ['Median salary', wage?.annual_median],
@@ -103,9 +100,7 @@ export default function OccupationDetails() {
 
       <section className="section-block">
         <h2>Employment information</h2>
-        <p>
-          Estimated employment: {formatNumber(wage?.employment)}
-        </p>
+        <p>Estimated employment: {formatNumber(wage?.employment)}</p>
         <p>Source: {wage?.source ?? 'BLS OEWS'}</p>
       </section>
     </main>

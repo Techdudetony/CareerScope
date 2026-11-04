@@ -1,12 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import {
-  BriefcaseBusiness,
-  ChartColumn,
-  Search,
-  Menu,
-  X,
-} from 'lucide-react';
+import { BriefcaseBusiness, ChartColumn, Search, Menu, X } from 'lucide-react';
 
 import ThemeToggle from './ui/ThemeToggle';
 
@@ -49,12 +43,7 @@ function NavBarContent() {
   return (
     <header className="site-header">
       <div className="container nav-inner">
-        <NavLink
-          to="/"
-          className="brand"
-          aria-label="CareerScope home"
-          onClick={closeMenu}
-        >
+        <NavLink to="/" className="brand" aria-label="CareerScope home" onClick={closeMenu}>
           <span className="brand__icon" aria-hidden="true">
             <BriefcaseBusiness size={22} />
           </span>
@@ -67,9 +56,7 @@ function NavBarContent() {
               key={to}
               to={to}
               end={end}
-              className={({ isActive }) =>
-                `nav-link${isActive ? ' nav-link--active' : ''}`
-              }
+              className={({ isActive }) => `nav-link${isActive ? ' nav-link--active' : ''}`}
             >
               <Icon size={18} aria-hidden="true" />
               <span>{label}</span>
@@ -89,11 +76,7 @@ function NavBarContent() {
             aria-controls="mobile-navigation"
             onClick={() => setMenuOpen((open) => !open)}
           >
-            {menuOpen ? (
-              <X size={22} aria-hidden="true" />
-            ) : (
-              <Menu size={22} aria-hidden="true" />
-            )}
+            {menuOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
           </button>
         </div>
 
@@ -110,9 +93,7 @@ function NavBarContent() {
               end={end}
               onClick={closeMenu}
               className={({ isActive }) =>
-                `mobile-navigation__link${
-                  isActive ? ' mobile-navigation__link--active' : ''
-                }`
+                `mobile-navigation__link${isActive ? ' mobile-navigation__link--active' : ''}`
               }
             >
               <Icon size={19} aria-hidden="true" />

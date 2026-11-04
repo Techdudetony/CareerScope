@@ -1,4 +1,3 @@
-
 import { Moon, Monitor, Sun } from 'lucide-react';
 import useTheme from '../../hooks/useTheme';
 import './ThemeToggle.css';
@@ -20,9 +19,7 @@ export default function ThemeToggle() {
   const Icon = ICONS[theme] ?? Monitor;
 
   function cycleTheme() {
-    const currentIndex = OPTIONS.findIndex(
-      (option) => option.value === theme
-    );
+    const currentIndex = OPTIONS.findIndex((option) => option.value === theme);
 
     const nextIndex = (currentIndex + 1) % OPTIONS.length;
     setTheme(OPTIONS[nextIndex].value);
@@ -31,16 +28,9 @@ export default function ThemeToggle() {
   return (
     <div className="theme-toggle-container">
       <div className="theme-toggle theme-toggle--desktop">
-        <Icon
-          size={18}
-          aria-hidden="true"
-          className="theme-toggle__icon"
-        />
+        <Icon size={18} aria-hidden="true" className="theme-toggle__icon" />
 
-        <label
-          htmlFor="theme-preference"
-          className="sr-only"
-        >
+        <label htmlFor="theme-preference" className="sr-only">
           Appearance preference
         </label>
 

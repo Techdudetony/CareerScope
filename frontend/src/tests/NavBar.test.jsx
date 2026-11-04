@@ -1,10 +1,5 @@
-
 import { describe, expect, it } from 'vitest';
-import {
-  fireEvent,
-  render,
-  screen,
-} from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter, createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { act } from 'react';
 
@@ -25,9 +20,7 @@ describe('Navbar', () => {
   it('renders the CareerScope brand', () => {
     renderNavbar();
 
-    expect(
-      screen.getByRole('link', { name: /careerscope home/i })
-    ).toHaveAttribute('href', '/');
+    expect(screen.getByRole('link', { name: /careerscope home/i })).toHaveAttribute('href', '/');
   });
 
   it('closes the mobile menu when the route changes', async () => {
@@ -45,21 +38,21 @@ describe('Navbar', () => {
       </ThemeProvider>
     );
 
-    fireEvent.click(
-      screen.getByRole('button', { name: 'Open menu' })
-    );
+    fireEvent.click(screen.getByRole('button', { name: 'Open menu' }));
 
-    expect(
-      screen.getByRole('button', { name: 'Close menu' })
-    ).toHaveAttribute('aria-expanded', 'true');
+    expect(screen.getByRole('button', { name: 'Close menu' })).toHaveAttribute(
+      'aria-expanded',
+      'true'
+    );
 
     await act(async () => {
       await router.navigate('/occupations');
     });
 
-    expect(
-      screen.getByRole('button', { name: 'Open menu' })
-    ).toHaveAttribute('aria-expanded', 'false');
+    expect(screen.getByRole('button', { name: 'Open menu' })).toHaveAttribute(
+      'aria-expanded',
+      'false'
+    );
   });
 
   it('renders desktop navigation links', () => {
@@ -81,9 +74,7 @@ describe('Navbar', () => {
 
     expect(button).toHaveAttribute('aria-expanded', 'false');
 
-    expect(
-      document.getElementById('mobile-navigation')
-    ).toHaveAttribute('hidden');
+    expect(document.getElementById('mobile-navigation')).toHaveAttribute('hidden');
   });
 
   it('opens and closes the mobile menu', () => {
@@ -97,9 +88,7 @@ describe('Navbar', () => {
 
     expect(button).toHaveAttribute('aria-expanded', 'true');
 
-    expect(
-      document.getElementById('mobile-navigation')
-    ).not.toHaveAttribute('hidden');
+    expect(document.getElementById('mobile-navigation')).not.toHaveAttribute('hidden');
 
     fireEvent.click(button);
 
@@ -129,13 +118,11 @@ describe('Navbar', () => {
 
     fireEvent.click(button);
 
-    const mobileNavigation = document.getElementById(
-      'mobile-navigation'
-    );
+    const mobileNavigation = document.getElementById('mobile-navigation');
 
-    const occupationsLink = Array.from(
-      mobileNavigation.querySelectorAll('a')
-    ).find((link) => link.textContent.includes('Occupations'));
+    const occupationsLink = Array.from(mobileNavigation.querySelectorAll('a')).find((link) =>
+      link.textContent.includes('Occupations')
+    );
 
     fireEvent.click(occupationsLink);
 
@@ -150,13 +137,10 @@ describe('Navbar', () => {
       name: 'Main navigation',
     });
 
-    const occupationsLink = Array.from(
-      navigation.querySelectorAll('a')
-    ).find((link) => link.textContent.includes('Occupations'));
-
-    expect(occupationsLink).toHaveAttribute(
-      'aria-current',
-      'page'
+    const occupationsLink = Array.from(navigation.querySelectorAll('a')).find((link) =>
+      link.textContent.includes('Occupations')
     );
+
+    expect(occupationsLink).toHaveAttribute('aria-current', 'page');
   });
 });

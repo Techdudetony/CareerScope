@@ -1,4 +1,3 @@
-
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
@@ -9,9 +8,7 @@ import './App.css';
 
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Occupations = lazy(() => import('./pages/Occupations'));
-const OccupationDetails = lazy(
-  () => import('./pages/OccupationDetails')
-);
+const OccupationDetails = lazy(() => import('./pages/OccupationDetails'));
 
 function PageLoader() {
   return (
@@ -22,11 +19,7 @@ function PageLoader() {
 }
 
 function LazyPage({ children }) {
-  return (
-    <Suspense fallback={<PageLoader />}>
-      {children}
-    </Suspense>
-  );
+  return <Suspense fallback={<PageLoader />}>{children}</Suspense>;
 }
 
 export default function App() {

@@ -3,28 +3,22 @@
   <head>
     <script>
       (() => {
-        const key = "careerscope-theme";
-        let preference = "system";
+        const key = 'careerscope-theme';
+        let preference = 'system';
 
         try {
           const stored = localStorage.getItem(key);
 
-          if (["light", "dark", "system"].includes(stored)) {
+          if (['light', 'dark', 'system'].includes(stored)) {
             preference = stored;
           }
         } catch {
           // Storage may be unavailable.
         }
 
-        const prefersDark =
-          window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false;
+        const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false;
 
-        const resolved =
-          preference === "system"
-            ? prefersDark
-              ? "dark"
-              : "light"
-            : preference;
+        const resolved = preference === 'system' ? (prefersDark ? 'dark' : 'light') : preference;
 
         document.documentElement.dataset.theme = resolved;
       })();

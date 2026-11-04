@@ -38,7 +38,7 @@ export const motionTransitions = {
   },
 
   spring: {
-    type: "spring",
+    type: 'spring',
     stiffness: 260,
     damping: 24,
   },
