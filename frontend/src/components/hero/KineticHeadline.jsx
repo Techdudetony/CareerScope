@@ -11,7 +11,7 @@ export default function KineticHeadline() {
   const reducedMotion = useReducedMotion();
 
   return (
-    <h1 className="hero-headline">
+    <h1 id="hero-heading" className="hero-headline">
       <span className="sr-only">Explore careers. Discover possibilities.</span>
 
       <span aria-hidden="true" className="hero-headline-visual">

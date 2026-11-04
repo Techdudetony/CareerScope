@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { motion, useMotionValue, useReducedMotion, useSpring } from 'motion/react';
 
-export default function MagneticButton({ children, className = '', strength = 0.18, ...props }) {
+export default function MagneticButton({ children, className = '', strength = 0.18 }) {
   const ref = useRef(null);
   const reducedMotion = useReducedMotion();
 
@@ -48,9 +48,7 @@ export default function MagneticButton({ children, className = '', strength = 0.
       onPointerLeave={resetPosition}
       onPointerCancel={resetPosition}
     >
-      <div className={className} {...props}>
-        {children}
-      </div>
+      <div className={className}>{children}</div>
     </motion.div>
   );
 }

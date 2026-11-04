@@ -14,9 +14,7 @@ export default function HeroSection() {
       <div className="career-hero-content">
         <div className="career-hero-eyebrow">CAREERSCOPE / CAREER INTELLIGENCE</div>
 
-        <div id="hero-heading">
-          <KineticHeadline />
-        </div>
+        <KineticHeadline />
 
         <p className="career-hero-description">
           Explore real career opportunities, discover salary insights, and make your next career

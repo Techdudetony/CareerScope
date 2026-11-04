@@ -92,6 +92,7 @@
 .hero-headline-word {
   display: inline-block;
   max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .hero-headline-accent {
@@ -314,22 +315,16 @@
   pointer-events: none;
 }
 
-.career-hero-content {
-  position: relative;
-  z-index: 2;
-}
-
 /* ==========================================
    Magnetic button interactions
    ========================================== */
 
-.magnetic-button-wrapper {
-  display: inline-flex;
-  position: relative;
-  will-change: transform;
+.magnetic-button-wrapper > div {
+  display: flex;
+  width: 100%;
 }
 
-.magnetic-button-wrapper > a {
+.magnetic-button-wrapper a {
   width: 100%;
 }
 
