@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Search, TrendingUp } from 'lucide-react';
+import { ArrowRight, TrendingUp } from 'lucide-react';
 import { getTopPayingOccupations, checkApiHealth } from '../api/occupations';
 import OccupationCard from '../components/OccupationCard';
+import HeroSection from '../components/hero/HeroSection';
 
 export default function Dashboard() {
   const [occupations, setOccupations] = useState([]);
@@ -40,28 +41,7 @@ export default function Dashboard() {
 
   return (
     <main className="container page-content">
-      <section className="hero">
-        <div className="hero-content">
-          <span className="eyebrow">BLS OEWS | May 2025</span>
-
-          <h1>
-            Explore careers.
-            <br />
-            Understand your earning potential.
-          </h1>
-
-          <p>
-            Discover occupations, compare national salary estimates, and make informed career
-            decisions using official labor market data.
-          </p>
-
-          <Link to="/occupations" className="primary-button">
-            <Search size={18} />
-            Explore occupations
-            <ArrowRight size={18} />
-          </Link>
-        </div>
-      </section>
+      <HeroSection />
 
       <section className="stats-grid" aria-label="Dataset information">
         <div className="stat-card">
@@ -89,7 +69,7 @@ export default function Dashboard() {
         </div>
       </section>
 
-      <section className="section-block">
+      <section className="section-block" id="career-insights">
         <div className="section-heading">
           <div>
             <span className="eyebrow">Career insights</span>
