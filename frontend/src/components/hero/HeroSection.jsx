@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Search } from 'lucide-react';
 
 import KineticHeadline from './KineticHeadline';
+import MagneticButton from './MagneticButton';
 import ParticleField from './ParticleField';
 import './HeroSection.css';
 
@@ -23,15 +24,19 @@ export default function HeroSection() {
         </p>
 
         <div className="career-hero-actions">
-          <Link to="/occupations" className="hero-button-primary">
-            <Search size={18} aria-hidden="true" />
-            Explore occupations
-            <ArrowRight size={18} aria-hidden="true" />
-          </Link>
+          <MagneticButton>
+            <Link to="/occupations" className="hero-button-primary">
+              <Search size={18} aria-hidden="true" />
+              Explore occupations
+              <ArrowRight size={18} aria-hidden="true" />
+            </Link>
+          </MagneticButton>
 
-          <a href="#career-insights" className="hero-button-secondary">
-            Discover insights
-          </a>
+          <MagneticButton strength={0.12}>
+            <a href="#career-insights" className="hero-button-secondary">
+              Discover insights
+            </a>
+          </MagneticButton>
         </div>
 
         <p className="career-hero-source">Powered by U.S. Bureau of Labor Statistics data</p>

@@ -318,3 +318,30 @@
   position: relative;
   z-index: 2;
 }
+
+/* ==========================================
+   Magnetic button interactions
+   ========================================== */
+
+.magnetic-button-wrapper {
+  display: inline-flex;
+  position: relative;
+  will-change: transform;
+}
+
+.magnetic-button-wrapper > a {
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .magnetic-button-wrapper {
+    display: flex;
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .magnetic-button-wrapper {
+    will-change: auto;
+  }
+}
