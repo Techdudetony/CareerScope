@@ -2,11 +2,14 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Search } from 'lucide-react';
 
 import KineticHeadline from './KineticHeadline';
+import ParticleField from './ParticleField';
 import './HeroSection.css';
 
 export default function HeroSection() {
   return (
     <section className="career-hero" aria-labelledby="hero-heading">
+      <ParticleField />
+
       <div className="career-hero-content">
         <div className="career-hero-eyebrow">CAREERSCOPE / CAREER INTELLIGENCE</div>
 
