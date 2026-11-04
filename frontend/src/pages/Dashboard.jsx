@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Search, TrendingUp } from 'lucide-react';
 import { getTopPayingOccupations, checkApiHealth } from '../api/occupations';
 import OccupationCard from '../components/OccupationCard';
-import Reveal from '../components/motion/Reveal';
 
 export default function Dashboard() {
   const [occupations, setOccupations] = useState([]);
@@ -45,13 +44,11 @@ export default function Dashboard() {
         <div className="hero-content">
           <span className="eyebrow">BLS OEWS | May 2025</span>
 
-          <Reveal variant='fadeUp'>
-            <h1>
-              Explore careers.
-              <br />
-              Understand your earning potential.
-            </h1>
-          </Reveal>
+          <h1>
+            Explore careers.
+            <br />
+            Understand your earning potential.
+          </h1>
 
           <p>
             Discover occupations, compare national salary estimates, and make informed career
