@@ -48,7 +48,7 @@ export default function OccupationCard({ occupation }) {
 
           <strong className="career-card-salary">{salary}</strong>
 
-          <span className="career-card-source">BLS OWES · 2025</span>
+          <span className="career-card-source">BLS OEWS · 2025</span>
         </div>
       </Link>
     </motion.article>

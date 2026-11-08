@@ -22,7 +22,7 @@ export default function CountUp({ value, duration = 1.2, prefix = '', suffix = '
         startTime = timestamp;
       }
 
-      const elapsed = (timestamp - timestamp) / 1000;
+      const elapsed = (timestamp - startTime) / 1000;
       const progress = Math.min(elapsed / duration, 1);
 
       const eased = 1 - Math.pow(1 - progress, 3);
