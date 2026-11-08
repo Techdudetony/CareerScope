@@ -5,6 +5,7 @@ import { getTopPayingOccupations, checkApiHealth } from '../api/occupations';
 import OccupationCard from '../components/OccupationCard';
 import HeroSection from '../components/hero/HeroSection';
 import InsightsOverview from '../components/insights/InsightsOverview';
+import SalaryComparisonChart from '../components/insights/SalaryComparisonChart';
 
 export default function Dashboard() {
   const [occupations, setOccupations] = useState([]);
@@ -80,6 +81,10 @@ export default function Dashboard() {
           </div>
         )}
       </section>
+
+      {!loading && !error && occupations.length > 0 && (
+        <SalaryComparisonChart occupations={occupations} />
+      )}
     </main>
   );
 }
