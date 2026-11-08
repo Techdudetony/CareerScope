@@ -15,6 +15,7 @@
   justify-content: space-between;
   gap: 1.5rem;
   margin-bottom: 1.75rem;
+  margin-left: 2rem;
 }
 
 .salary-chart-heading h2 {
@@ -33,6 +34,7 @@
 }
 
 .salary-chart-year {
+  margin-right: 2rem;
   flex-shrink: 0;
   padding: 0.55rem 0.85rem;
   border-radius: 999px;
@@ -43,6 +45,7 @@
 }
 
 .salary-chart-card {
+  margin: 2rem;
   padding: 2rem;
   border: 1px solid rgba(110, 130, 180, 0.18);
   border-radius: 22px;
@@ -85,7 +88,7 @@
 
 .salary-chart-table-wrapper {
   overflow-x: auto;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
 }
 
 .salary-chart-table {

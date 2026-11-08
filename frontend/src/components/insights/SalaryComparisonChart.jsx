@@ -26,6 +26,9 @@ export default function SalaryComparisonChart({ occupations = [] }) {
 
   const data = useMemo(() => prepareSalaryComparison(occupations), [occupations]);
 
+  const maxSalary = Math.max(0, ...data.map((item) => item.salary));
+  const chartMaximum = Math.ceil((maxSalary * 1.12) / 50000) * 50000;
+
   if (data.length === 0) {
     return (
       <section className="salary-chart-section" aria-labelledby="salary-chart-heading">
@@ -71,10 +74,10 @@ export default function SalaryComparisonChart({ occupations = [] }) {
               data={data}
               layout="vertical"
               margin={{
-                top: 12,
-                right: 24,
-                left: 8,
-                bottom: 8,
+                top: 16,
+                right: 36,
+                left: 12,
+                bottom: 12,
               }}
             >
               <CartesianGrid
@@ -85,7 +88,9 @@ export default function SalaryComparisonChart({ occupations = [] }) {
 
               <XAxis
                 type="number"
-                domain={[0, 'dataMax']}
+                domain={[0, chartMaximum]}
+                tickCount={5}
+                allowDataOverflow={false}
                 tickFormatter={(value) => `$${Math.round(value / 1000)}k`}
                 tick={{
                   fill: 'var(--salary-chart-muted)',
