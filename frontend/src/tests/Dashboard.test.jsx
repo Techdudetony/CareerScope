@@ -9,6 +9,10 @@ vi.mock('../api/occupations', () => ({
   getTopPayingOccupations: vi.fn(),
 }));
 
+vi.mock('../components/hero/ParticleField', () => ({
+  default: () => <canvas aria-hidden="true" />,
+}));
+
 function renderDashboard() {
   return render(
     <MemoryRouter>
@@ -42,7 +46,24 @@ describe('Dashboard', () => {
 
     expect(await screen.findByText('Connected')).toBeInTheDocument();
 
-    expect(screen.getByText('Software Developers')).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', {
+        name: 'Software Developers',
+        level: 3,
+      })
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByRole('heading', {
+        name: /compare earning potential/i,
+      })
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByRole('cell', {
+        name: 'Software Developers',
+      })
+    ).toBeInTheDocument();
   });
 
   it('handles backend failures', async () => {

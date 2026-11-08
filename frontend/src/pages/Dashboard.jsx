@@ -4,6 +4,8 @@ import { ArrowRight, TrendingUp } from 'lucide-react';
 import { getTopPayingOccupations, checkApiHealth } from '../api/occupations';
 import OccupationCard from '../components/OccupationCard';
 import HeroSection from '../components/hero/HeroSection';
+import InsightsOverview from '../components/insights/InsightsOverview';
+import SalaryComparisonChart from '../components/insights/SalaryComparisonChart';
 
 export default function Dashboard() {
   const [occupations, setOccupations] = useState([]);
@@ -43,31 +45,7 @@ export default function Dashboard() {
     <main className="container page-content">
       <HeroSection />
 
-      <section className="stats-grid" aria-label="Dataset information">
-        <div className="stat-card">
-          <span>Data source</span>
-          <strong>BLS</strong>
-          <p>Occupational Employment and Wage Statistics</p>
-        </div>
-
-        <div className="stat-card">
-          <span>Data coverage</span>
-          <strong>United States</strong>
-          <p>National occupational wage estimates</p>
-        </div>
-
-        <div className="stat-card">
-          <span>API connection</span>
-          <strong className={`status-${apiStatus}`}>
-            {apiStatus === 'checking'
-              ? 'Checking...'
-              : apiStatus === 'online'
-                ? 'Connected'
-                : 'Unavailable'}
-          </strong>
-          <p>CareerScope FastAPI backend</p>
-        </div>
-      </section>
+      <InsightsOverview apiStatus={apiStatus} />
 
       <section className="section-block" id="career-insights">
         <div className="section-heading">
@@ -103,6 +81,10 @@ export default function Dashboard() {
           </div>
         )}
       </section>
+
+      {!loading && !error && occupations.length > 0 && (
+        <SalaryComparisonChart occupations={occupations} />
+      )}
     </main>
   );
 }
